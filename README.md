@@ -46,17 +46,17 @@ button.control{width:60px;height:60px;font-size:24px;opacity:0.5;}
 </div>
 
 <script>
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
 let fps=0, frames=0, lastTime=performance.now(), lastFrameTime=performance.now();
 let maxFPS=144, frameInterval=1000/maxFPS;
 let score=0, health=3, paused=false, currentGame='flappy';
 const keys={};
 
-// ================= Клавіатура + сенсор =================
+// ======= Клавіатура + сенсор =======
 document.addEventListener('keydown', e=>keys[e.code]=true);
 document.addEventListener('keyup', e=>keys[e.code]=false);
 document.addEventListener('mousedown', ()=>{if(currentGame==='flappy') flappyJump(); if(currentGame==='sound') soundTrigger();});
@@ -67,7 +67,7 @@ document.getElementById('right').addEventListener('touchstart', ()=>keys['ArrowR
 document.getElementById('right').addEventListener('touchend', ()=>keys['ArrowRight']=false);
 document.getElementById('jump').addEventListener('touchstart', ()=>{if(currentGame==='flappy') flappyJump();});
 
-// ================= HUD =================
+// ======= HUD =======
 document.getElementById('maxFPSInput').addEventListener('change',(e)=>{
   let val=parseInt(e.target.value);
   if(val>=30 && val<=240){ maxFPS=val; frameInterval=1000/maxFPS; }
@@ -80,25 +80,25 @@ function updateHUD(){
 function togglePause(){paused=!paused; alert(paused?"Гра на паузі":"Гра відновлена");}
 function resetGame(){score=0; health=3; initGame(); updateHUD(); saveProgress();}
 
-// ================= Збереження прогресу =================
+// ======= Збереження прогресу =======
 function saveProgress(){
-  localStorage.setItem('arcade_score', score);
-  localStorage.setItem('arcade_health', health);
-  localStorage.setItem('arcade_game', currentGame);
+  localStorage.setItem('arcade_score',score);
+  localStorage.setItem('arcade_health',health);
+  localStorage.setItem('arcade_game',currentGame);
 }
 function loadProgress(){
-  let s = localStorage.getItem('arcade_score');
-  let h = localStorage.getItem('arcade_health');
-  let g = localStorage.getItem('arcade_game');
+  let s=localStorage.getItem('arcade_score');
+  let h=localStorage.getItem('arcade_health');
+  let g=localStorage.getItem('arcade_game');
   if(s!==null) score=parseInt(s);
   if(h!==null) health=parseInt(h);
   if(g!==null) currentGame=g;
 }
 
-// ================= Switch Game =================
+// ======= Switch Game =======
 function switchGame(name){ currentGame=name; score=0; health=3; initGame(); saveProgress();}
 
-// ================= Ініціалізація ігор =================
+// ======= Ініціалізація ігор =======
 function initGame(){
   if(currentGame==='flappy') initFlappy();
   else if(currentGame==='road') initRoad();
@@ -108,7 +108,7 @@ function initGame(){
   else if(currentGame==='sound') initSound();
 }
 
-// ================= Головний цикл =================
+// ======= Головний цикл =======
 function loop(now){
   requestAnimationFrame(loop);
   if(paused) return;
@@ -129,11 +129,12 @@ function loop(now){
   updateHUD();
   if(health<=0){alert(`Game Over! Score: ${score}`); resetGame();}
 }
+
 loadProgress();
 initGame();
 loop(performance.now());
 
-// ================= Тут вставляєш функції ігор =================
+// ======= ТУТ вставляєш функції ігор =======
 // initFlappy, updateFlappy, drawFlappy, flappyJump
 // initRoad, updateRoad, drawRoad
 // initAutoGun, updateAutoGun, drawAutoGun
